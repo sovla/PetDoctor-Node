@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type CatDocument = Cat & Document;
+export type UserDocument = User & Document;
 
 // 스키마 정의를 표시하는 데코레이터
 @Schema()
-export class Cat {
+export class User {
   // @Prop 데코레이터는 문서의 속성을 정의함/ 타입은 암시적으로 유추하지만 @Prop([String]) 명시적으로 표시하는 것이 좋음
   //   @Prop({
   //     type: String, 타입지정
@@ -21,4 +21,4 @@ export class Cat {
   breed: string;
 }
 
-export const CatSchema = SchemaFactory.createForClass(Cat);
+export const UserSchema = SchemaFactory.createForClass(User);
