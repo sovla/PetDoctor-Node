@@ -9,15 +9,6 @@ import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 
 @Module({
-  imports: [
-    ConfigModule,
-    // MongoDB Connection
-    MongooseModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) =>
-        configService.getMongoConfig(),
-    }),
-    UserModule,
-  ],
+  imports: [MongooseModule.forRoot('mongodb://localhost/nest'), UserModule],
 })
 export class AppModule {}
