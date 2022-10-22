@@ -1,8 +1,7 @@
-import { Hospital } from './../hospital/schemas/hospital.schema';
 import { ApiProperty } from '@nestjs/swagger';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { Address } from './hospital.schema';
+import { Address, Hospital } from './hospital.schema';
 
 export type UserDocument = User & Document;
 
