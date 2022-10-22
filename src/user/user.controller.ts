@@ -13,11 +13,11 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger/dist';
-import { User, UserSchema } from '../schemas/user.schema';
+import { User, UserDocument, UserSchema } from '../schemas/user.schema';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('user')
 @ApiTags('User API')
-@ApiCreatedResponse({ description: '유저를 생성한다.' })
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -27,8 +27,8 @@ export class UserController {
     description: '유저를 생성한다.',
   })
   @ApiCreatedResponse({ type: User })
-  create() {
-    return this.userService.create();
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
   }
 
   @Get()
@@ -38,16 +38,21 @@ export class UserController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+    return this.userService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string) {
-    return this.userService.update(+id);
+  @Get(':ids')
+  findList(@Param('ids') ids: string[]) {
+    return this.userService.findList(ids);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  @Patch()
+  update(@Body() userSchema: UserDocument) {
+    return this.userService.update(userSchema);
+  }
+
+  @Delete()
+  remove(@Body('id') id: string) {
+    return this.userService.remove(id);
   }
 }
