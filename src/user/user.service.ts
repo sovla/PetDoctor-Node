@@ -1,7 +1,7 @@
 import { CreateUserDto } from './dto/create-user.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
-import { Connection, Model } from 'mongoose';
+import mongoose, { Connection, Model } from 'mongoose';
 import { User, UserDocument } from 'src/schemas/user.schema';
 import { Hospital, HospitalDocument } from 'src/schemas/hospital.schema';
 
@@ -62,7 +62,7 @@ export class UserService {
     );
   }
 
-  async remove(id: string) {
+  async remove(id: mongoose.Types.ObjectId) {
     return await this.userModel.updateOne(
       {
         _id: id,

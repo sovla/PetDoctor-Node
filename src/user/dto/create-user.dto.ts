@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import mongoose from 'mongoose';
 
 export class CreateUserDto {
   @ApiProperty()
@@ -6,4 +7,9 @@ export class CreateUserDto {
 
   @ApiProperty()
   password: string;
+}
+
+export class DeleteUseDto {
+  @ApiProperty()
+  id: mongoose.Types.ObjectId;
 }

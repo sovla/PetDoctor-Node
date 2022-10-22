@@ -13,8 +13,8 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger/dist';
-import { User, UserDocument, UserSchema } from '../schemas/user.schema';
-import { CreateUserDto } from './dto/create-user.dto';
+import { User, UserDocument } from '../schemas/user.schema';
+import { CreateUserDto, DeleteUseDto } from './dto/create-user.dto';
 
 @Controller('user')
 @ApiTags('User API')
@@ -76,7 +76,7 @@ export class UserController {
   @ApiOperation({
     summary: '유저 정보 삭제/ 삭제시 delete_date 날짜 추가',
   })
-  remove(@Body('id') id: string) {
-    return this.userService.remove(id);
+  remove(@Body() deleteUserDto: DeleteUseDto) {
+    return this.userService.remove(deleteUserDto.id);
   }
 }
