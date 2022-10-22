@@ -1,8 +1,9 @@
 import { User, UserDocument } from 'src/schemas/user.schema';
-import { Hospital, HospitalDocument } from './schemas/hospital.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
+import { Hospital, HospitalDocument } from 'src/schemas/hospital.schema';
+import { CreateHospitalDto } from './dto/create-hospital.dto';
 
 @Injectable()
 export class HospitalService {
@@ -11,30 +12,63 @@ export class HospitalService {
     @InjectConnection() private connection: Connection,
   ) {}
 
-  create(userId: String) {
+  create(createHospitalDto: CreateHospitalDto) {
+    const { address, ...hospital } = createHospitalDto;
     return this.hospitalModel.create({
-      breed: '테스트',
-      age: 10,
-      realOwner: userId,
-      owner: [userId],
+      ...hospital,
+      address: address,
     });
   }
 
-  findAll(userId: string) {
-    return this.hospitalModel.find({
-      realOwner: userId,
+  async findAll() {
+    return await this.hospitalModel.find({});
+  }
+
+  async findOne(id: string) {
+    return await this.hospitalModel
+      .findOne({
+        _id: id,
+      })
+      .populate('link_category_id');
+  }
+
+  async findList(ids: string[]) {
+    return await this.hospitalModel.find({
+      _id: {
+        $in: JSON.parse(ids as any),
+      },
     });
   }
 
-  findOne(id: number) {
-    return this.hospitalModel.findById(id);
+  async update(hospitalDocument: HospitalDocument) {
+    const { link_category_id, ...hospital } = hospitalDocument;
+    const update = await this.hospitalModel.updateOne(
+      {
+        _id: hospitalDocument.id,
+      },
+      {
+        $set: {
+          ...hospital,
+        },
+        $addToSet: {
+          link_category_id: link_category_id,
+        },
+      },
+    );
+
+    return await this.hospitalModel.findOne({ _id: hospital.id });
   }
 
-  update(id: number) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    return await this.hospitalModel.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          delete_date: Date.now(),
+        },
+      },
+    );
   }
 }

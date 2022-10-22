@@ -3,8 +3,8 @@ import { Module } from '@nestjs/common';
 import { HospitalService as HospitalService } from './hospital.service';
 import { HospitalController } from './hospital.controller';
 import { User, UserSchema } from 'src/schemas/user.schema';
-import { Hospital, HospitalSchema } from './schemas/hospital.schema';
 import { UserModule } from 'src/user/user.module';
+import { Hospital, HospitalSchema } from 'src/schemas/hospital.schema';
 
 @Module({
   imports: [
