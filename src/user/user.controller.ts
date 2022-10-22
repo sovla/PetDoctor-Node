@@ -32,26 +32,50 @@ export class UserController {
   }
 
   @Get()
+  @ApiOperation({
+    summary: '전체 유저 조회',
+  })
   findAll() {
     return this.userService.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'id 기준 유저 상세 정보',
+  })
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
 
   @Get(':ids')
+  @ApiOperation({
+    summary: 'ids 기준 유저 정보, ref 값 없이',
+  })
   findList(@Param('ids') ids: string[]) {
     return this.userService.findList(ids);
   }
 
   @Patch()
+  @ApiOperation({
+    summary: 'user 정보 업데이트',
+    requestBody: {
+      content: {
+        User: {
+          schema: {
+            $ref: '#/components/schemas/User',
+          },
+        },
+      },
+    },
+  })
   update(@Body() userSchema: UserDocument) {
-    return this.userService.update(userSchema);
+    return this.userService.update(userSchema as UserDocument);
   }
 
   @Delete()
+  @ApiOperation({
+    summary: '유저 정보 삭제/ 삭제시 delete_date 날짜 추가',
+  })
   remove(@Body('id') id: string) {
     return this.userService.remove(id);
   }
