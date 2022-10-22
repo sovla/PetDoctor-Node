@@ -13,7 +13,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger/dist';
-import { User, UserSchema } from './schemas/user.schema';
+import { User, UserSchema } from '../schemas/user.schema';
 
 @Controller('user')
 @ApiTags('User API')

@@ -1,4 +1,4 @@
-import { UserSchema } from './user/schemas/user.schema';
+import { UserSchema } from './schemas/user.schema';
 import { Controller, Get, Request } from '@nestjs/common';
 import Crawler from 'crawler';
 import { AppService } from './app.service';

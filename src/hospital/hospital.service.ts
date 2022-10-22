@@ -1,4 +1,4 @@
-import { User, UserDocument } from 'src/user/schemas/user.schema';
+import { User, UserDocument } from 'src/schemas/user.schema';
 import { Hospital, HospitalDocument } from './schemas/hospital.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
