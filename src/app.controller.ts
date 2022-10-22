@@ -1,14 +1,22 @@
+import { UserSchema } from './user/schemas/user.schema';
 import { Controller, Get, Request } from '@nestjs/common';
 import Crawler from 'crawler';
 import { AppService } from './app.service';
 import { Request as ExpressRequest, Router } from 'express';
 import { json } from 'stream/consumers';
+import {
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger/dist';
 
 @Controller()
+@ApiTags('테스트용 Swagger')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
+  @ApiOperation({ summary: '유저 생성 API', description: '유저를 생성한다.' })
   getHello(@Request() req: ExpressRequest): string {
     const c = new Crawler({
       maxConnections: 10,
