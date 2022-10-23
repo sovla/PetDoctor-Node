@@ -8,7 +8,6 @@ import { CreateHospitalDto } from './dto/hospital.dto';
 export class HospitalService {
   constructor(
     @InjectModel(Hospital.name) private hospitalModel: Model<HospitalDocument>,
-    @InjectConnection() private connection: Connection,
   ) {}
 
   create(createHospitalDto: CreateHospitalDto) {

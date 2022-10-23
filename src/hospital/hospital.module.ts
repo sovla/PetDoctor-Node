@@ -14,6 +14,5 @@ import { Hospital, HospitalSchema } from 'src/schemas/hospital.schema';
   ],
   controllers: [HospitalController],
   providers: [HospitalService],
-  exports: [HospitalService],
 })
 export class HospitalModule {}
