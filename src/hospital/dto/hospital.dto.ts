@@ -1,9 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  Address,
-  Hospital,
-  HospitalDocument,
-} from 'src/schemas/hospital.schema';
+import { Address, HospitalDocument } from 'src/schemas/hospital.schema';
 
 export class CreateHospitalDto {
   @ApiProperty()

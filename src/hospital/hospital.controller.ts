@@ -1,7 +1,4 @@
-import {
-  CreateHospitalDto,
-  DeleteHospitalDto,
-} from './dto/create-hospital.dto';
+import { CreateHospitalDto, DeleteHospitalDto } from './dto/hospital.dto';
 import {
   Controller,
   Get,

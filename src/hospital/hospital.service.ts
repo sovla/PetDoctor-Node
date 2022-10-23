@@ -1,9 +1,8 @@
-import { User, UserDocument } from 'src/schemas/user.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
 import { Hospital, HospitalDocument } from 'src/schemas/hospital.schema';
-import { CreateHospitalDto } from './dto/create-hospital.dto';
+import { CreateHospitalDto } from './dto/hospital.dto';
 
 @Injectable()
 export class HospitalService {
