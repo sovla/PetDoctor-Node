@@ -1,26 +1,53 @@
 import { Injectable } from '@nestjs/common';
-import { CreateReviewDto } from './dto/create-review.dto';
-import { UpdateReviewDto } from './dto/update-review.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Review, ReviewDocument } from 'src/schemas/review.schema';
+import {
+  CreateReviewDto,
+  DeleteReviewDto,
+  ListReviewDto,
+  ReportDto,
+} from './dto/review.dto';
 
 @Injectable()
 export class ReviewService {
+  constructor(
+    @InjectModel(Review.name) private reviewModel: Model<ReviewDocument>,
+  ) {}
+
   create(createReviewDto: CreateReviewDto) {
-    return 'This action adds a new review';
+    return this.reviewModel.create({
+      link_id: createReviewDto.link_id,
+      write_id: createReviewDto.write_id,
+      title: createReviewDto.title,
+      content: createReviewDto.content,
+      write_datetime: Date.now(),
+    });
   }
 
-  findAll() {
-    return `This action returns all review`;
+  findList(dto: ListReviewDto) {
+    return this.reviewModel
+      .find({})
+      .sort({
+        write_datetime: 'desc',
+      })
+      .limit(dto.limit)
+      .skip((dto.page - 1) * dto.limit);
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} review`;
+    return this.reviewModel.findOne({ _id: id }).populate('');
   }
 
-  update(id: number, updateReviewDto: UpdateReviewDto) {
-    return `This action updates a #${id} review`;
+  update(updateReviewDto: ReviewDocument) {
+    return `This action updates a # review`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} review`;
+  remove(deleteReviewDto: DeleteReviewDto) {
+    return `This action removes a w`;
+  }
+
+  report(reportDto: ReportDto) {
+    return;
   }
 }

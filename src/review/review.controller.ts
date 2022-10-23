@@ -1,7 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { ReviewService } from './review.service';
-import { CreateReviewDto } from './dto/create-review.dto';
-import { UpdateReviewDto } from './dto/update-review.dto';
+import {
+  CreateReviewDto,
+  DeleteReviewDto,
+  ListReviewDto,
+  ReportDto,
+} from './dto/review.dto';
+import { Review, ReviewDocument } from 'src/schemas/review.schema';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('review')
 export class ReviewController {
@@ -13,8 +28,8 @@ export class ReviewController {
   }
 
   @Get()
-  findAll() {
-    return this.reviewService.findAll();
+  findList(@Query() listReviewDto: ListReviewDto) {
+    return this.reviewService.findList(listReviewDto);
   }
 
   @Get(':id')
@@ -22,13 +37,30 @@ export class ReviewController {
     return this.reviewService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
-    return this.reviewService.update(+id, updateReviewDto);
+  @Patch()
+  @ApiOperation({
+    summary: 'Review 정보 업데이트',
+    requestBody: {
+      content: {
+        Review: {
+          schema: {
+            $ref: '#/components/schemas/Review',
+          },
+        },
+      },
+    },
+  })
+  update(@Body() updateReviewDto: ReviewDocument) {
+    return this.reviewService.update(updateReviewDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.reviewService.remove(+id);
+  @Delete()
+  remove(@Param() deleteReviewDto: DeleteReviewDto) {
+    return this.reviewService.remove(deleteReviewDto);
+  }
+
+  @Post('/report')
+  reportReview(@Body() reportDto: ReportDto) {
+    return this.reviewService.report(reportDto);
   }
 }
